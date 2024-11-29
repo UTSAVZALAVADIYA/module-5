@@ -1,3 +1,4 @@
+
 1
 
 *Student Table Creation and Data Insertion: 
@@ -7,6 +8,7 @@ INSERT INTO Student (Rollno, Name, Branch) VALUES
 (1, 'Jay', 'Computer Science'),
 (2, 'Suhani', 'Electronic and Com'),
 (3, 'Kriti', 'Electronic and Com');
+
 
 
 *Exam Table Creation and Data Insertion:
@@ -50,7 +52,9 @@ INSERT INTO PersonInfo (FirstName, LastName, Address, City, Age) VALUES
 	CREATE TABLE Exam (ExamID INT PRIMARY KEY, Rollno INT, S_code VARCHAR(10) UNIQUE, Marks INT, P_code VARCHAR(10) NOT NULL, FOREIGN KEY (Rollno) 	REFERENCES Student(Rollno));
 
 4. CREATE VIEW Student_View AS SELECT Rollno, Name, Branch FROM Student;
+
 5. CREATE TABLE User (UserID INT PRIMARY KEY, UserName VARCHAR(50), Password VARCHAR(50));
+
 6. Structured query language (SQL) is  programming language for storing and processing information in a relational database.
 	
 	Create Student table:
@@ -68,7 +72,7 @@ INSERT INTO PersonInfo (FirstName, LastName, Address, City, Age) VALUES
 	RDBMS: A Relational Database Management System (RDBMS) stores data in the form of related tables and supports relationships using primary and 	foreign keys.
 9. Normalization is the process of organizing data in a database.
 
---------------------------------------------------------------------------------------------------------------------------------
+.................................................................................................................................
 
 2
 
@@ -98,7 +102,7 @@ INSERT INTO Incentive (Employee_ref_id, Incentive_date, Incentive_amount) VALUES
 (2, '2013-01-01', 3500);
 
 
----------------------------------------------------------------------------------------------------------------------------------------
+.................................................................................................................................
 
 
 1. SELECT First_Name AS "Employee Name" FROM Employee;
@@ -115,13 +119,13 @@ INSERT INTO Incentive (Employee_ref_id, Incentive_date, Incentive_amount) VALUES
 12. CREATE PROCEDURE Get_Max_Salary_By_Department() BEGIN SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department; END;
 13. CREATE TRIGGER after_employee_insert AFTER INSERT ON Employee FOR EACH ROW BEGIN INSERT INTO Employee_Summary (First_Name, Last_Name, Salary) VALUES 	(NEW.First_Name, NEW.Last_Name, NEW.Salary); END;
 
--------------------------------------------------------------------------------------------------------------------------------------
+.................................................................................................................................
 
 3
 
 *Table salesperson Creation and Data Insertion
 
-.CREATE TABLE salesperson ( SNo INT PRIMARY KEY, SNAME VARCHAR(50), CITY VARCHAR(50), COMM DECIMAL(3, 2) );
+CREATE TABLE salesperson ( SNo INT PRIMARY KEY, SNAME VARCHAR(50), CITY VARCHAR(50), COMM DECIMAL(3, 2) );
 INSERT INTO salesperson (SNo, SNAME, CITY, COMM) VALUES
 (1001, 'Peel', 'London', 0.12),
 (1002, 'Serres', 'San Jose', 0.13),
@@ -141,7 +145,7 @@ INSERT INTO customer (CNM, CNAME, CITY, RATING, SNo) VALUES
 (206, 'Clemens', 'London', 300, 1007),
 (207, 'Pereira', 'Roe', 100, 1004);
 
-----------------------------------------------------------------------------------------------------------------------------------------
+.................................................................................................................................
 
 
 1. SELECT * FROM orders WHERE amt > 1000;
@@ -152,4 +156,5 @@ INSERT INTO customer (CNM, CNAME, CITY, RATING, SNo) VALUES
 6. SELECT * FROM orders WHERE amt > 0 AND amt IS NOT NULL;
 7. SELECT COUNT(DISTINCT SNo) FROM orders;
 8. SELECT SNo, MAX(amt) AS largest_order, order_date FROM orders GROUP BY SNo, order_date;
+
 
