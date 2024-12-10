@@ -1,19 +1,26 @@
+ 1. Student Table Creation and Data Insertion:
 
-1
+CREATE TABLE Student (
+    Rollno INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Branch VARCHAR(50)
+);
 
-*Student Table Creation and Data Insertion: 
-
-CREATE TABLE Student ( Rollno INT PRIMARY KEY, Name VARCHAR(50), Branch VARCHAR(50) );
 INSERT INTO Student (Rollno, Name, Branch) VALUES
 (1, 'Jay', 'Computer Science'),
 (2, 'Suhani', 'Electronic and Com'),
 (3, 'Kriti', 'Electronic and Com');
 
+ 2. Exam Table Creation and Data Insertion:
 
+CREATE TABLE Exam (
+    Rollno INT,
+    S_code VARCHAR(10),
+    Marks INT,
+    P_code VARCHAR(10),
+    FOREIGN KEY (Rollno) REFERENCES Student(Rollno)
+);
 
-*Exam Table Creation and Data Insertion:
-
-CREATE TABLE Exam ( Rollno INT, S_code VARCHAR(10), Marks INT, P_code VARCHAR(10), FOREIGN KEY (Rollno) REFERENCES Student(Rollno) );
 INSERT INTO Exam (Rollno, S_code, Marks, P_code) VALUES
 (1, 'CS11', 50, 'CS'),
 (1, 'CS12', 60, 'CS'),
@@ -22,10 +29,16 @@ INSERT INTO Exam (Rollno, S_code, Marks, P_code) VALUES
 (3, 'EC101', 45, 'EC'),
 (3, 'EC102', 50, 'EC');
 
+ 3. Person Table Creation and Data Insertion:
 
-*personTable
+CREATE TABLE PersonInfo (
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Address VARCHAR(100),
+    City VARCHAR(50),
+    Age INT
+);
 
-CREATE TABLE PersonInfo ( FirstName VARCHAR(50), LastName VARCHAR(50), Address VARCHAR(100), City VARCHAR(50), Age INT );
 INSERT INTO PersonInfo (FirstName, LastName, Address, City, Age) VALUES
 ('Mickey', 'Mouse', '123 Fantasy Way', 'Anaheim', 73),
 ('Bat', 'Man', '321 Cavern Ave', 'Gotham', 54),
@@ -36,49 +49,16 @@ INSERT INTO PersonInfo (FirstName, LastName, Address, City, Age) VALUES
 ('Cat', 'Woman', '234 Purrfect Street', 'Hairball', 32),
 ('Tweety', 'Bird', '543', 'Itottlaw', 28);
 
-....................................................................................................................................
+ 4. Employee Table Creation and Data Insertion:
 
-
-1. CREATE TABLE Student (Rollno INT PRIMARY KEY, Name VARCHAR(50), Branch VARCHAR(50));
-
-2. CREATE TABLE Exam (Rollno INT, S_code VARCHAR(10), Marks INT, P_code VARCHAR(10), FOREIGN KEY (Rollno) REFERENCES Student(Rollno));
-
-3. used to specify rules for the data in a table.
-	
-	primary key:
-	CREATE TABLE Student (Rollno INT PRIMARY KEY, Name VARCHAR(50), Branch VARCHAR(50) NOT NULL);
-	
-	foreign key:
-	CREATE TABLE Exam (ExamID INT PRIMARY KEY, Rollno INT, S_code VARCHAR(10) UNIQUE, Marks INT, P_code VARCHAR(10) NOT NULL, FOREIGN KEY (Rollno) 	REFERENCES Student(Rollno));
-
-4. CREATE VIEW Student_View AS SELECT Rollno, Name, Branch FROM Student;
-
-5. CREATE TABLE User (UserID INT PRIMARY KEY, UserName VARCHAR(50), Password VARCHAR(50));
-
-6. Structured query language (SQL) is  programming language for storing and processing information in a relational database.
-	
-	Create Student table:
-	CREATE TABLE Student (Rollno INT PRIMARY KEY, Name VARCHAR(50), Branch VARCHAR(50));
-	
-	Create Exam table with Foreign Key on Rollno:
-	CREATE TABLE Exam (ExamID INT PRIMARY KEY, Rollno INT, S_code VARCHAR(10), Marks INT, P_code VARCHAR(10), FOREIGN KEY (Rollno) REFERENCES 	Student(Rollno));
-	
-
-7. database object that is associated with a table and automatically executes a set of SQL statements when a specific event occurs on that table.
-
-	CREATE TRIGGER after_employee_insert AFTER INSERT ON Employee FOR EACH ROW BEGIN INSERT INTO Log_Table(EmployeeID, Action) VALUES (NEW.EmployeeID, 	'Inserted'); END;
-8. 	DBMS: A Database Management System (DBMS) is a software that allows users to store, modify, and extract information from a database. It does not 	support relationships between tables.
-	
-	RDBMS: A Relational Database Management System (RDBMS) stores data in the form of related tables and supports relationships using primary and 	foreign keys.
-9. Normalization is the process of organizing data in a database.
-
-.................................................................................................................................
-
-2
-
-*Employee Table Creation and Data Insertion: 
-
-CREATE TABLE Employee ( Employee_id INT PRIMARY KEY, First_Name VARCHAR(50), Last_Name VARCHAR(50), Salary INT, Joining_date DATE, Department VARCHAR(50) );
+CREATE TABLE Employee (
+    Employee_id INT PRIMARY KEY,
+    First_Name VARCHAR(50),
+    Last_Name VARCHAR(50),
+    Salary INT,
+    Joining_date DATE,
+    Department VARCHAR(50)
+);
 
 INSERT INTO Employee (Employee_id, First_Name, Last_Name, Salary, Joining_date, Department) VALUES
 (1, 'John', 'Abraham', 1000000, '2013-01-01', 'Banking'),
@@ -90,10 +70,15 @@ INSERT INTO Employee (Employee_id, First_Name, Last_Name, Salary, Joining_date, 
 (7, 'TestName1', '123', 650000, '2013-01-01', 'Services'),
 (8, 'TestName2', 'Lname%', 600000, '2013-02-01', 'Insurance');
 
+5. Incentive Table Creation and Data Insertion:
 
-*Incentive Table Creation and Data Insertion:
+CREATE TABLE Incentive (
+    Employee_ref_id INT,
+    Incentive_date DATE,
+    Incentive_amount INT,
+    FOREIGN KEY (Employee_ref_id) REFERENCES Employee(Employee_id)
+);
 
-CREATE TABLE Incentive ( Employee_ref_id INT, Incentive_date DATE, Incentive_amount INT, FOREIGN KEY (Employee_ref_id) REFERENCES Employee(Employee_id) );
 INSERT INTO Incentive (Employee_ref_id, Incentive_date, Incentive_amount) VALUES
 (1, '2013-02-01', 5000),
 (2, '2013-02-01', 3000),
@@ -101,31 +86,73 @@ INSERT INTO Incentive (Employee_ref_id, Incentive_date, Incentive_amount) VALUES
 (1, '2013-01-01', 4500),
 (2, '2013-01-01', 3500);
 
+ 6. Query Examples for Employee Table:
 
-.................................................................................................................................
+ 1. Select Employee Names
+SELECT First_Name AS "Employee Name" FROM Employee;
 
+ 2. Select Joining Date Breakdown (Year, Month, Day)
+SELECT First_Name, YEAR(Joining_date) AS Joining_Year, MONTH(Joining_date) AS Joining_Month, DAY(Joining_date) AS Joining_Day FROM Employee;
 
-1. SELECT First_Name AS "Employee Name" FROM Employee;
-2. SELECT First_Name, YEAR(Joining_date) AS Joining_Year, MONTH(Joining_date) AS Joining_Month, DAY(Joining_date) AS Joining_Day FROM Employee;
-3. SELECT * FROM Employee ORDER BY First_Name ASC, Salary DESC;
-4. SELECT * FROM Employee WHERE First_Name LIKE '%o%';
-5. SELECT * FROM Employee WHERE MONTH(Joining_date) = 1;
-6. SELECT Department, SUM(Salary) AS Total_Salary FROM Employee GROUP BY Department ORDER BY Total_Salary DESC;
-7. SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department ORDER BY Max_Salary ASC;
-8. SELECT e.First_Name, i.Incentive_amount FROM Employee e JOIN Incentive i ON e.Employee_ref_id = i.Employee_ref_id WHERE i.Incentive_amount > 3000;
-9. SELECT MAX(Salary) AS Second_Highest_Salary FROM Employee WHERE Salary < (SELECT MAX(Salary) FROM Employee);
-10. SELECT e.First_Name, i.Incentive_amount FROM Employee e LEFT JOIN Incentive i ON e.Employee_ref_id = i.Employee_ref_id;
-11. CREATE VIEW Employee_Summary AS SELECT First_Name, Last_Name, Salary FROM Employee;
-12. CREATE PROCEDURE Get_Max_Salary_By_Department() BEGIN SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department; END;
-13. CREATE TRIGGER after_employee_insert AFTER INSERT ON Employee FOR EACH ROW BEGIN INSERT INTO Employee_Summary (First_Name, Last_Name, Salary) VALUES 	(NEW.First_Name, NEW.Last_Name, NEW.Salary); END;
+ 3. Select All Employee Details Ordered by Name and Salary
+SELECT * FROM Employee ORDER BY First_Name ASC, Salary DESC;
 
-.................................................................................................................................
+ 4. Select Employees with 'o' in their First Name
+SELECT * FROM Employee WHERE First_Name LIKE '%o%';
 
-3
+ 5. Select Employees who Joined in January
+SELECT * FROM Employee WHERE MONTH(Joining_date) = 1;
 
-*Table salesperson Creation and Data Insertion
+ 6. Select Department and Total Salary
+SELECT Department, SUM(Salary) AS Total_Salary FROM Employee GROUP BY Department ORDER BY Total_Salary DESC;
 
-CREATE TABLE salesperson ( SNo INT PRIMARY KEY, SNAME VARCHAR(50), CITY VARCHAR(50), COMM DECIMAL(3, 2) );
+ 7. Select Department and Max Salary
+SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department ORDER BY Max_Salary ASC;
+
+ 8. Select Employees with Incentive > 3000
+SELECT e.First_Name, i.Incentive_amount 
+FROM Employee e 
+JOIN Incentive i ON e.Employee_id = i.Employee_ref_id 
+WHERE i.Incentive_amount > 3000;
+
+ 9. Select Second Highest Salary
+SELECT MAX(Salary) AS Second_Highest_Salary 
+FROM Employee 
+WHERE Salary < (SELECT MAX(Salary) FROM Employee);
+
+ 10. Select Employees with Their Incentive Amounts (Left Join)
+SELECT e.First_Name, i.Incentive_amount 
+FROM Employee e 
+LEFT JOIN Incentive i ON e.Employee_id = i.Employee_ref_id;
+
+ 11. Create Employee Summary View
+CREATE VIEW Employee_Summary AS 
+SELECT First_Name, Last_Name, Salary FROM Employee;
+
+ 12. Create Procedure to Get Max Salary by Department
+CREATE PROCEDURE Get_Max_Salary_By_Department() 
+BEGIN
+    SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department;
+END;
+
+13. Create Trigger for Inserting Data into Employee Summary After Employee Insert
+CREATE TRIGGER after_employee_insert 
+AFTER INSERT ON Employee
+FOR EACH ROW 
+BEGIN
+    INSERT INTO Employee_Summary (First_Name, Last_Name, Salary) 
+    VALUES (NEW.First_Name, NEW.Last_Name, NEW.Salary);
+END;
+
+ 7. Salesperson Table Creation and Data Insertion:
+
+CREATE TABLE salesperson (
+    SNo INT PRIMARY KEY,
+    SNAME VARCHAR(50),
+    CITY VARCHAR(50),
+    COMM DECIMAL(3, 2)
+);
+
 INSERT INTO salesperson (SNo, SNAME, CITY, COMM) VALUES
 (1001, 'Peel', 'London', 0.12),
 (1002, 'Serres', 'San Jose', 0.13),
@@ -133,10 +160,17 @@ INSERT INTO salesperson (SNo, SNAME, CITY, COMM) VALUES
 (1007, 'Rafkin', 'Barcelona', 0.15),
 (1003, 'Axelrod', 'New York', 0.10);
 
+8. Customer Table Creation and Data Insertion:
 
-*Table Customer Creation and Data Insertion
+CREATE TABLE customer (
+    CNM INT PRIMARY KEY,
+    CNAME VARCHAR(50),
+    CITY VARCHAR(50),
+    RATING INT,
+    SNo INT,
+    FOREIGN KEY (SNo) REFERENCES salesperson(SNo)
+);
 
-CREATE TABLE customer ( CNM INT PRIMARY KEY, CNAME VARCHAR(50), CITY VARCHAR(50), RATING INT, SNo INT, FOREIGN KEY (SNo) REFERENCES salesperson(SNo) );
 INSERT INTO customer (CNM, CNAME, CITY, RATING, SNo) VALUES
 (201, 'Hoffman', 'London', 100, 1001),
 (202, 'Giovanne', 'Roe', 200, 1003),
@@ -144,17 +178,3 @@ INSERT INTO customer (CNM, CNAME, CITY, RATING, SNo) VALUES
 (204, 'Grass', 'Barcelona', 100, 1002),
 (206, 'Clemens', 'London', 300, 1007),
 (207, 'Pereira', 'Roe', 100, 1004);
-
-.................................................................................................................................
-
-
-1. SELECT * FROM orders WHERE amt > 1000;
-2. SELECT SNAME, CITY FROM salesperson WHERE CITY = 'London' AND COMM > 0.10;
-3. SELECT * FROM salesperson WHERE CITY IN ('Barcelona', 'London');
-4. SELECT * FROM salesperson WHERE COMM > 0.10 AND COMM < 0.12;
-5. SELECT * FROM customer WHERE RATING > 100 OR CITY = 'Roe';
-6. SELECT * FROM orders WHERE amt > 0 AND amt IS NOT NULL;
-7. SELECT COUNT(DISTINCT SNo) FROM orders;
-8. SELECT SNo, MAX(amt) AS largest_order, order_date FROM orders GROUP BY SNo, order_date;
-
-
