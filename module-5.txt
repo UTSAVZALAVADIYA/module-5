@@ -1,5 +1,4 @@
- 1. Student Table Creation and Data Insertion:
-
+1. Student Table Creation and Data Insertion:
 CREATE TABLE Student (
     Rollno INT PRIMARY KEY,
     Name VARCHAR(50),
@@ -11,8 +10,7 @@ INSERT INTO Student (Rollno, Name, Branch) VALUES
 (2, 'Suhani', 'Electronic and Com'),
 (3, 'Kriti', 'Electronic and Com');
 
- 2. Exam Table Creation and Data Insertion:
-
+2. Exam Table Creation and Data Insertion:
 CREATE TABLE Exam (
     Rollno INT,
     S_code VARCHAR(10),
@@ -29,8 +27,7 @@ INSERT INTO Exam (Rollno, S_code, Marks, P_code) VALUES
 (3, 'EC101', 45, 'EC'),
 (3, 'EC102', 50, 'EC');
 
- 3. Person Table Creation and Data Insertion:
-
+3. PersonInfo Table Creation and Data Insertion:
 CREATE TABLE PersonInfo (
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
@@ -49,8 +46,7 @@ INSERT INTO PersonInfo (FirstName, LastName, Address, City, Age) VALUES
 ('Cat', 'Woman', '234 Purrfect Street', 'Hairball', 32),
 ('Tweety', 'Bird', '543', 'Itottlaw', 28);
 
- 4. Employee Table Creation and Data Insertion:
-
+4. Employee Table Creation and Data Insertion:
 CREATE TABLE Employee (
     Employee_id INT PRIMARY KEY,
     First_Name VARCHAR(50),
@@ -71,7 +67,6 @@ INSERT INTO Employee (Employee_id, First_Name, Last_Name, Salary, Joining_date, 
 (8, 'TestName2', 'Lname%', 600000, '2013-02-01', 'Insurance');
 
 5. Incentive Table Creation and Data Insertion:
-
 CREATE TABLE Incentive (
     Employee_ref_id INT,
     Incentive_date DATE,
@@ -86,66 +81,7 @@ INSERT INTO Incentive (Employee_ref_id, Incentive_date, Incentive_amount) VALUES
 (1, '2013-01-01', 4500),
 (2, '2013-01-01', 3500);
 
- 6. Query Examples for Employee Table:
-
- 1. Select Employee Names
-SELECT First_Name AS "Employee Name" FROM Employee;
-
- 2. Select Joining Date Breakdown (Year, Month, Day)
-SELECT First_Name, YEAR(Joining_date) AS Joining_Year, MONTH(Joining_date) AS Joining_Month, DAY(Joining_date) AS Joining_Day FROM Employee;
-
- 3. Select All Employee Details Ordered by Name and Salary
-SELECT * FROM Employee ORDER BY First_Name ASC, Salary DESC;
-
- 4. Select Employees with 'o' in their First Name
-SELECT * FROM Employee WHERE First_Name LIKE '%o%';
-
- 5. Select Employees who Joined in January
-SELECT * FROM Employee WHERE MONTH(Joining_date) = 1;
-
- 6. Select Department and Total Salary
-SELECT Department, SUM(Salary) AS Total_Salary FROM Employee GROUP BY Department ORDER BY Total_Salary DESC;
-
- 7. Select Department and Max Salary
-SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department ORDER BY Max_Salary ASC;
-
- 8. Select Employees with Incentive > 3000
-SELECT e.First_Name, i.Incentive_amount 
-FROM Employee e 
-JOIN Incentive i ON e.Employee_id = i.Employee_ref_id 
-WHERE i.Incentive_amount > 3000;
-
- 9. Select Second Highest Salary
-SELECT MAX(Salary) AS Second_Highest_Salary 
-FROM Employee 
-WHERE Salary < (SELECT MAX(Salary) FROM Employee);
-
- 10. Select Employees with Their Incentive Amounts (Left Join)
-SELECT e.First_Name, i.Incentive_amount 
-FROM Employee e 
-LEFT JOIN Incentive i ON e.Employee_id = i.Employee_ref_id;
-
- 11. Create Employee Summary View
-CREATE VIEW Employee_Summary AS 
-SELECT First_Name, Last_Name, Salary FROM Employee;
-
- 12. Create Procedure to Get Max Salary by Department
-CREATE PROCEDURE Get_Max_Salary_By_Department() 
-BEGIN
-    SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department;
-END;
-
-13. Create Trigger for Inserting Data into Employee Summary After Employee Insert
-CREATE TRIGGER after_employee_insert 
-AFTER INSERT ON Employee
-FOR EACH ROW 
-BEGIN
-    INSERT INTO Employee_Summary (First_Name, Last_Name, Salary) 
-    VALUES (NEW.First_Name, NEW.Last_Name, NEW.Salary);
-END;
-
- 7. Salesperson Table Creation and Data Insertion:
-
+6. Salesperson Table Creation and Data Insertion:
 CREATE TABLE salesperson (
     SNo INT PRIMARY KEY,
     SNAME VARCHAR(50),
@@ -160,8 +96,7 @@ INSERT INTO salesperson (SNo, SNAME, CITY, COMM) VALUES
 (1007, 'Rafkin', 'Barcelona', 0.15),
 (1003, 'Axelrod', 'New York', 0.10);
 
-8. Customer Table Creation and Data Insertion:
-
+7. Customer Table Creation and Data Insertion:
 CREATE TABLE customer (
     CNM INT PRIMARY KEY,
     CNAME VARCHAR(50),
@@ -178,3 +113,138 @@ INSERT INTO customer (CNM, CNAME, CITY, RATING, SNo) VALUES
 (204, 'Grass', 'Barcelona', 100, 1002),
 (206, 'Clemens', 'London', 300, 1007),
 (207, 'Pereira', 'Roe', 100, 1004);
+
+Queries for Q-2: Student, Exam, and PersonInfo Tables
+
+1. Select All Student Details
+SELECT * FROM Student;
+
+2. Select Students from a Specific Branch (e.g., 'Electronic and Com')
+SELECT * FROM Student WHERE Branch = 'Electronic and Com';
+
+3. Select Students Ordered by Name
+SELECT * FROM Student ORDER BY Name ASC;
+
+4. Select Students who have a 'K' in Their Name
+SELECT * FROM Student WHERE Name LIKE '%K%';
+
+Exam Table Queries:
+1. Select All Exam Details
+SELECT * FROM Exam;
+
+2. Select Students and Their Marks for a Specific Subject (e.g., 'CS11')
+SELECT Rollno, S_code, Marks, P_code FROM Exam WHERE S_code = 'CS11';
+
+3. Select Marks for Each Student Ordered by Rollno and Subject Code
+SELECT Rollno, S_code, Marks FROM Exam ORDER BY Rollno, S_code;
+
+4. Select Students Who Scored Above a Certain Marks (e.g., 60)
+SELECT Rollno, S_code, Marks FROM Exam WHERE Marks > 60;
+
+5. Find the Average Marks for Each Subject
+SELECT S_code, AVG(Marks) AS Average_Marks FROM Exam GROUP BY S_code;
+
+6. Select Students Who Have Appeared for 'EC101' Subject
+SELECT Rollno, S_code, Marks, P_code FROM Exam WHERE S_code = 'EC101';
+
+PersonInfo Table Queries:
+1. Select All Person Info Details
+SELECT * FROM PersonInfo;
+
+2. Select Person Details for a Specific City (e.g., 'London')
+SELECT * FROM PersonInfo WHERE City = 'London';
+
+3. Select Person Names and Age
+SELECT FirstName, LastName, Age FROM PersonInfo;
+
+4. Select People Who Are Older Than 60
+SELECT * FROM PersonInfo WHERE Age > 60;
+
+5. Select People Ordered by Age in Descending Order
+SELECT * FROM PersonInfo ORDER BY Age DESC;
+
+Queries for Q-4: Employee, Incentive, Salesperson, and Customer Tables
+
+1. Select Employee Names
+SELECT First_Name AS "Employee Name" FROM Employee;
+
+2. Select Joining Date Breakdown (Year, Month, Day)
+SELECT First_Name, YEAR(Joining_date) AS Joining_Year, MONTH(Joining_date) AS Joining_Month, DAY(Joining_date) AS Joining_Day FROM Employee;
+
+3. Select All Employee Details Ordered by Name and Salary
+SELECT * FROM Employee ORDER BY First_Name ASC, Salary DESC;
+
+4. Select Employees with 'o' in their First Name
+SELECT * FROM Employee WHERE First_Name LIKE '%o%';
+
+5. Select Employees who Joined in January
+SELECT * FROM Employee WHERE MONTH(Joining_date) = 1;
+
+6. Select Department and Total Salary
+SELECT Department, SUM(Salary) AS Total_Salary FROM Employee GROUP BY Department ORDER BY Total_Salary DESC;
+
+7. Select Department and Max Salary
+SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department ORDER BY Max_Salary ASC;
+
+8. Select Employees with Incentive > 3000
+SELECT e.First_Name, i.Incentive_amount 
+FROM Employee e 
+JOIN Incentive i ON e.Employee_id = i.Employee_ref_id 
+WHERE i.Incentive_amount > 3000;
+
+9. Select Second Highest Salary
+SELECT MAX(Salary) AS Second_Highest_Salary 
+FROM Employee 
+WHERE Salary < (SELECT MAX(Salary) FROM Employee);
+
+10. Select Employees with Their Incentive Amounts (Left Join)
+SELECT e.First_Name, i.Incentive_amount 
+FROM Employee e 
+LEFT JOIN Incentive i ON e.Employee_id = i.Employee_ref_id;
+
+11. Create Employee Summary View
+CREATE VIEW Employee_Summary AS 
+SELECT First_Name, Last_Name, Salary FROM Employee;
+
+12. Create Procedure to Get Max Salary by Department
+CREATE PROCEDURE Get_Max_Salary_By_Department() 
+BEGIN
+    SELECT Department, MAX(Salary) AS Max_Salary FROM Employee GROUP BY Department;
+END;
+
+13. Create Trigger for Inserting Data into Employee Summary After Employee Insert
+CREATE TRIGGER after_employee_insert 
+AFTER INSERT ON Employee
+FOR EACH ROW 
+BEGIN
+    INSERT INTO Employee_Summary (First_Name, Last_Name, Salary) 
+    VALUES (NEW.First_Name, NEW.Last_Name, NEW.Salary);
+END;
+
+Incentive Table Queries:
+1. Select All Incentive Details
+SELECT * FROM Incentive;
+
+2. Select Employees with Their Incentive Amounts
+SELECT e.First_Name, e.Last_Name, i.Incentive_amount 
+FROM Employee e 
+JOIN Incentive i ON e.Employee_id = i.Employee_ref_id;
+
+3. Select Employees with Incentives Above 4000
+SELECT e.First_Name, i.Incentive_amount 
+FROM Employee e 
+JOIN Incentive i ON e.Employee_id = i.Employee_ref_id 
+WHERE i.Incentive_amount > 4000;
+
+Salesperson Table Queries:
+1. Select All Salesperson Details
+SELECT * FROM salesperson;
+
+2. Select Salespeople Who Earned Commission Above 0.12
+SELECT * FROM salesperson WHERE COMM > 0.12;
+
+3. Select Salespeople Ordered by City
+SELECT * FROM salesperson ORDER BY CITY;
+
+4. Select Salesperson Names and Their Commission
+SELECT SNAME, COMM FROM salesperson;
