@@ -1,1 +1,28 @@
+SELECT 
+    c.country_name_eng AS Country_Name_Eng, 
+    ci.city_name AS City_Name, 
+    cu.customer_name AS Customer_Name
+FROM 
+    country c
+LEFT JOIN 
+    city ci ON c.id = ci.country_id
+LEFT JOIN 
+    customer cu ON ci.id = cu.city_id
+ORDER BY 
+    c.country_name_eng, ci.city_name, cu.customer_name;
 
+
+
+
+SELECT 
+    c.country_name_eng AS Country_Name_Eng,
+    ci.city_name AS City_Name,
+    cu.customer_name AS Customer_Name
+FROM 
+    country c
+INNER JOIN 
+    city ci ON c.id = ci.country_id
+LEFT JOIN 
+    customer cu ON ci.id = cu.city_id
+ORDER BY 
+    c.country_name_eng, ci.city_name, cu.customer_name;
